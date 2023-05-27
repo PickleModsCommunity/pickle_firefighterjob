@@ -1,0 +1,1 @@
+["example"] 					= {["name"] = "example",  	     		        ["label"] = "Example",	 		    ["weight"] = 1, 		["type"] = "item", 		["image"] = "example.png", 				["unique"] = false, 	    ["useable"] = true, 	["shouldClose"] = true,   	["combinable"] = nil,   ["description"] = ""},
