@@ -45,20 +45,20 @@ function PlayAnim(ped, dict, ...)
     TaskPlayAnim(ped, dict, ...)
 end
 
-function PlayEffect(dict, particleName, entity, off, rot, time, cb)
-    CreateThread(function()
-        RequestNamedPtfxAsset(dict)
-        while not HasNamedPtfxAssetLoaded(dict) do
-            Wait(0)
-        end
-        UseParticleFxAssetNextCall(dict)
-        Wait(10)
-        local particleHandle = StartParticleFxLoopedOnEntity(particleName, entity, off.x, off.y, off.z, rot.x, rot.y, rot.z, 1.0)
-        SetParticleFxLoopedColour(particleHandle, 0, 255, 0 , 0)
-        Wait(time)
-        StopParticleFxLooped(particleHandle, false)
-        cb()
-    end)
+function PlayEffect(dict, particleName, entity, off, rot, scale, networked)
+    RequestNamedPtfxAsset(dict)
+    while not HasNamedPtfxAssetLoaded(dict) do
+        Wait(0)
+    end
+    UseParticleFxAssetNextCall(dict)
+    local off = off or vector3(0.0, 0.0, 0.0)
+    local rot = rot or vector3(0.0, 0.0, 0.0)
+    print(rot)
+    local handle = StartParticleFxLoopedOnEntity(particleName, entity, off.x, off.y, off.z, rot.x, rot.y, rot.z, scale or 1.0)
+    if networked then 
+        TriggerServerEvent("pickle_firefighterjob:startEffect", ObjToNet(entity), dict, particleName, off, rot, scale)
+    end
+    return handle
 end
 
 function WarpPlayer(coords, heading, cb)

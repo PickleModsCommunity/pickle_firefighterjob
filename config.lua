@@ -19,6 +19,22 @@ Config.Marker = { -- This will only be used if enabled, not using target, and no
     color = {255, 255, 255, 127}
 }
 
+Config.Fires = {
+    damageUpdate = 2, -- Update server-side upon release or when damage applied reaches this number.
+    extinguisher = { -- Fire Extinguisher Settings
+        hash = `WEAPON_FIREEXTINGUISHER`,
+        range = 3.0
+    },
+    truck = { -- Firetruck Settings
+        vehicles = { `firetruk` },
+        range = 10.0,
+    },
+    rewards = { -- Rewards for putting out a fire, if multiple put a fire out, it is distributed based on the amount of damage done to it.
+        {type = "cash", amount = 500},
+        {type = "xp", name = "firefighter", amount = 1000},
+    },
+}
+
 Config.XPEnabled = true -- When set to true, this will enable Pickle's XP compatibility, and enable xp rewards.
 
 Config.XPCategories = { -- Registered XP Types for Pickle's XP.

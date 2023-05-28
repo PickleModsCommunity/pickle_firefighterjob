@@ -209,6 +209,7 @@ function OndutyEvent(index)
     end
     UpdateInteraction(DepartmentInteractions[index].duty, {
         label = _L("interact_duty", _L("off")),
+        options = {},
     }, function(selected)
         DepartmentInteract(index, "duty")
     end)
@@ -218,6 +219,7 @@ function OffdutyEvent(index)
     local dept = Config.Departments[index]
     UpdateInteraction(DepartmentInteractions[index].duty, {
         label = _L("interact_duty", _L("on")),
+        options = {},
     }, function(selected)
         DepartmentInteract(index, "duty")
     end)
@@ -256,6 +258,6 @@ end)
 
 CreateThread(function() 
     InitializeScript()
-    Department = {index = 1}
-    OndutyEvent(1)
+    Wait(1000)
+    TriggerServerEvent("pickle_firefighterjob:setDuty", 1, not Department)
 end)
