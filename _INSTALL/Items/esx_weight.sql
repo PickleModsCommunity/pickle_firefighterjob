@@ -1,3 +1,3 @@
 INSERT INTO `items` (`name`, `label`, `weight`) VALUES
-	('example', 'Example', 100)
+	('watertank', 'Water Tank', 100)
 ;

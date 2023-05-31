@@ -36,6 +36,24 @@ function OpenBossMenu(index)
     })
 end
 
+function ToggleOutfit(onduty)
+    if onduty then 
+        local dept = Config.Departments[Department.index]
+        local outfits = dept.outfit or Config.Default.outfit
+        ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
+            local gender = skin.sex
+            local outfit = gender == 1 and outfits.female or outfits.male
+            if not outfit then return end
+            TriggerEvent('skinchanger:loadClothes', skin, outfit)
+        end)
+    else
+        ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
+            TriggerEvent('skinchanger:loadSkin', skin)
+            TriggerEvent('esx:restoreLoadout')
+        end)
+    end
+end
+
 RegisterNetEvent(GetCurrentResourceName()..":showNotification", function(text)
     ShowNotification(text)
 end)

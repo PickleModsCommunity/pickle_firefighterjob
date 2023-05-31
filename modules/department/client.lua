@@ -213,6 +213,29 @@ function OndutyEvent(index)
     }, function(selected)
         DepartmentInteract(index, "duty")
     end)
+    ToggleOutfit(true)
+    if Config.Fires.blip.enabled then
+        local scenarios = {}
+        for k,v in pairs(Fires) do 
+            local index
+            if v.scenario and not scenarios[v.scenario] then 
+                scenarios[v.scenario] = true
+                index = v.scenario
+            elseif not v.scenario then 
+                index = k
+            end
+            if index then
+                local cfg = Config.Fires.blip
+                FireBlips[index] = CreateBlip({
+                    label = cfg.label,
+                    coords = v.coords,
+                    id = cfg.id,
+                    color = cfg.color,
+                    scale = cfg.scale,
+                })
+            end
+        end
+    end
 end
 
 function OffdutyEvent(index)
@@ -223,11 +246,15 @@ function OffdutyEvent(index)
     }, function(selected)
         DepartmentInteract(index, "duty")
     end)
+    for k,v in pairs(FireBlips) do 
+        RemoveBlip(v)
+    end
+    ToggleOutfit(false)
 end
 
 function CleanupDepartment(index)
     for k,v in pairs(DepartmentInteractions[index]) do 
-        if k ~= "duty" then
+        if k ~= "duty" and k ~= "remove_vehicle" then
             DeleteInteraction(v)
             DepartmentInteractions[index][k] = nil
         end
@@ -258,6 +285,4 @@ end)
 
 CreateThread(function() 
     InitializeScript()
-    Wait(1000)
-    TriggerServerEvent("pickle_firefighterjob:setDuty", 1, not Department)
 end)

@@ -53,7 +53,6 @@ function PlayEffect(dict, particleName, entity, off, rot, scale, networked)
     UseParticleFxAssetNextCall(dict)
     local off = off or vector3(0.0, 0.0, 0.0)
     local rot = rot or vector3(0.0, 0.0, 0.0)
-    print(rot)
     local handle = StartParticleFxLoopedOnEntity(particleName, entity, off.x, off.y, off.z, rot.x, rot.y, rot.z, scale or 1.0)
     if networked then 
         TriggerServerEvent("pickle_firefighterjob:startEffect", ObjToNet(entity), dict, particleName, off, rot, scale)
@@ -61,17 +60,72 @@ function PlayEffect(dict, particleName, entity, off, rot, scale, networked)
     return handle
 end
 
-function WarpPlayer(coords, heading, cb)
-    CreateThread(function()
-        local ped = PlayerPedId()
-        DoScreenFadeOut(1000)
-        Wait(1300)
-        SetEntityCoords(ped, coords.x, coords.y, coords.z)
-        SetEntityHeading(ped, heading)
-        Wait(200)
-        DoScreenFadeIn(1000)
-        if cb then cb() end
-    end)
+function GetClosestVehicleDoor(vehicle, coords)
+    local coords = coords or GetEntityCoords(PlayerPedId())
+    local bones = {
+        "door_dside_f",
+        "door_dside_r",
+        "door_pside_f",
+        "door_pside_r",
+        "bonnet",
+        "boot"
+    }
+    local doors = {
+        0,
+        2,
+        1,
+        3,
+        4,
+        5
+    }
+    local closest
+    for i=1, #bones do 
+        local boneID = GetEntityBoneIndexByName(vehicle, bones[i])
+        if boneID ~= -1 then
+            local vcoords = GetWorldPositionOfEntityBone(vehicle, boneID)
+            local dist = #(coords - vcoords) 
+            if (not closest or closest.dist > dist) and dist < 3.0 then
+                closest = {door = doors[i], coords = vcoords, dist = dist}
+            end
+        end
+    end
+    if closest then 
+        return closest.door, closest.dist
+    end
+end
+
+function GetNearestVehicle(coords, radius) 
+    local coords = coords or GetEntityCoords(PlayerPedId())
+    local radius = radius or 3.0
+    local vehicles = GetGamePool('CVehicle')
+    local closest
+    for i=1, #vehicles do 
+        local vcoords = GetEntityCoords(vehicles[i]) 
+        local dist = #(coords - vcoords) 
+        if not closest or closest.dist > dist then 
+            closest = {entity = vehicles[i], dist = dist}
+        end
+    end
+    if closest then 
+        return closest.entity, closest.dist
+    end
+end
+
+function GetClosestPlayer(coords, radius)
+    local coords = coords or GetEntityCoords(PlayerPedId())
+    local radius = radius or 3.0
+    local players = GetPlayersInArea(coords, radius)
+    local closest
+    for i=1, #players do 
+        local pcoords = GetEntityCoords(GetPlayerPed(players[i])) 
+        local dist = #(coords - pcoords) 
+        if not closest or closest.dist > dist then 
+            closest = {id = GetPlayerServerId(players[i]), dist = dist}
+        end
+    end
+    if closest then 
+        return closest.id, closest.dist
+    end
 end
 
 local interactTick = 0

@@ -1,5 +1,15 @@
 Firefighters = {}
 
+function GetFirefighters()
+    local list = {}
+    for k,v in pairs(Firefighters) do 
+        if GetPlayerName(k) then 
+            list[#list + 1] = k
+        end
+    end
+    return list
+end
+
 function CheckRequired(source, required)
     if not required or #required < 1 then return true end
     local success = true
@@ -83,11 +93,11 @@ RegisterNetEvent("pickle_firefighterjob:setDuty", function(index, bool)
     local dept = Config.Departments[index]
     if not dept then return end
     local permissions = dept.permissions or Config.Default.permissions
-    if not CheckPermission(source, permissions.duty) then 
-        ShowNotification(source, _L("no_permission"))
-    elseif not bool then -- Off-duty
+    if not bool then -- Off-duty
         SetDuty(source) 
-    else
+    elseif not CheckPermission(source, permissions.duty) then 
+        ShowNotification(source, _L("no_permission"))
+    else -- Onduty
         SetDuty(source, index)
     end
 end)
@@ -133,4 +143,5 @@ RegisterNetEvent("pickle_firefighters:initializePlayer", function()
     local source = source
     local identifier = GetIdentifier(source)
     TriggerClientEvent("pickle_firefighters:setupInventory", source, {items = Inventory.Items})
+    TriggerClientEvent("pickle_firefighters:syncFires", source, Fires)
 end)
