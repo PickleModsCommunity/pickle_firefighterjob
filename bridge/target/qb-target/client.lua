@@ -33,6 +33,7 @@ function AddTargetZone(coords, radius, options)
 end
 
 function RemoveTargetZone(index)
+    if not index then return end
     Zones[index] = nil
     exports['qb-target']:RemoveZone(index)
 end

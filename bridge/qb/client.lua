@@ -35,6 +35,19 @@ RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     TriggerServerEvent("pickle_firefighterjob:initializePlayer")
 end)
 
+function ToggleOutfit(onduty)
+    if onduty then 
+        local dept = Config.Departments[Department.index]
+        local outfits = dept.outfit or Config.Default.outfit
+        local gender = QBCore.Functions.GetPlayerData().charinfo.gender
+        local outfit = gender == 1 and outfits.female or outfits.male
+        if not outfit then return end 
+        TriggerEvent('qb-clothing:client:loadOutfit', {outfitData = outfit})
+    else
+        TriggerServerEvent("qb-clothes:loadPlayerSkin")
+    end
+end
+
 function GetConvertedClothes(oldClothes)
     local clothes = {}
     local components = {
