@@ -1,7 +1,7 @@
 fx_version "cerulean"
 game "gta5"
 author "Pickle Mods"
-version "v1.0.0"
+version "v1.0.1"
 
 shared_scripts {
 	"@ox_lib/init.lua",
@@ -18,6 +18,7 @@ client_scripts {
 }
 
 server_scripts {
+	"@mysql-async/lib/MySQL.lua",
 	"bridge/**/**/server.lua",
 	"modules/**/server.lua",
 }
@@ -34,6 +35,6 @@ escrow_ignore {
 
 	-- COMMENT BELOW IF NOT SOURCE --
 
-	-- "modules/**/*.*",
-	-- "core/*.*",
+	"modules/**/*.*",
+	"core/*.*",
 }
