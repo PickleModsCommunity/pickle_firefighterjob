@@ -280,7 +280,8 @@ end)
 
 AddEventHandler('onResourceStart', function(resourceName)
     if (GetCurrentResourceName() ~= resourceName) then return end
-    TriggerServerEvent("pickle_firefighters:initializePlayer")
+    Wait(2000)
+    TriggerServerEvent("pickle_firefighterjob:initializePlayer")
 end)
 
 CreateThread(function() 

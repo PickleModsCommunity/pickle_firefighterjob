@@ -116,7 +116,7 @@ CreateThread(function()
         return (Inventory.GetItemCount(source, name) > 0)
     end
 
-    RegisterCallback("pickle_firefighters:getInventory", function(source, cb)
+    RegisterCallback("pickle_firefighterjob:getInventory", function(source, cb)
         cb(Inventory.GetInventory(source))
     end)
 

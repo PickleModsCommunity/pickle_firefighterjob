@@ -139,9 +139,9 @@ RegisterCallback("pickle_firefighterjob:vehicleTransaction", function(source, cb
     cb(true)
 end)
 
-RegisterNetEvent("pickle_firefighters:initializePlayer", function()
+RegisterNetEvent("pickle_firefighterjob:initializePlayer", function()
     local source = source
     local identifier = GetIdentifier(source)
-    TriggerClientEvent("pickle_firefighters:setupInventory", source, {items = Inventory.Items})
-    TriggerClientEvent("pickle_firefighters:syncFires", source, Fires)
+    TriggerClientEvent("pickle_firefighterjob:setupInventory", source, {items = Inventory.Items})
+    TriggerClientEvent("pickle_firefighterjob:syncFires", source, Fires)
 end)

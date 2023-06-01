@@ -50,7 +50,7 @@ Inventory.HasWeapon = function(source, name, count)
 end
 
 function InitializeInventory()
-    RegisterCallback("pickle_firefighters:getInventory", function(source, cb)
+    RegisterCallback("pickle_firefighterjob:getInventory", function(source, cb)
         cb(Inventory.GetInventory(source))
     end)
     

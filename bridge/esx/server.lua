@@ -127,7 +127,7 @@ CreateThread(function()
         return xPlayer.hasWeapon(name)
     end
 
-    RegisterCallback("pickle_firefighters:getInventory", function(source, cb)
+    RegisterCallback("pickle_firefighterjob:getInventory", function(source, cb)
         cb(Inventory.GetInventory(source))
     end)
 

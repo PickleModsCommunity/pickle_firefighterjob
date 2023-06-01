@@ -375,7 +375,7 @@ RegisterNetEvent("pickle_firefighterjob:useWaterTank", function()
     end
 end)
 
-RegisterNetEvent("pickle_firefighters:syncFires", function(data)
+RegisterNetEvent("pickle_firefighterjob:syncFires", function(data)
     Fires = data
 end)
 

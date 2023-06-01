@@ -60,7 +60,7 @@ end)
 
 RegisterNetEvent('esx:playerLoaded')
 AddEventHandler('esx:playerLoaded',function(xPlayer, isNew, skin)
-    TriggerServerEvent("pickle_firefighters:initializePlayer")
+    TriggerServerEvent("pickle_firefighterjob:initializePlayer")
 end)
 
 -- Inventory Fallback
@@ -76,7 +76,7 @@ CreateThread(function()
     
     Inventory.Ready = false
     
-    RegisterNetEvent("pickle_firefighters:setupInventory", function(data)
+    RegisterNetEvent("pickle_firefighterjob:setupInventory", function(data)
         Inventory.Items = data.items
         Inventory.Ready = true
     end)
