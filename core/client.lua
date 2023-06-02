@@ -20,6 +20,9 @@ function CreateVeh(modelHash, ...)
     while not HasModelLoaded(modelHash) do Wait(0) end
     local veh = CreateVehicle(modelHash, ...)
     SetModelAsNoLongerNeeded(modelHash)
+    if Config.GiveKeys then 
+        Config.GiveKeys(veh)
+    end
     return veh
 end
 

@@ -19,6 +19,11 @@ Config.Marker = { -- This will only be used if enabled, not using target, and no
     color = {255, 255, 255, 127}
 }
 
+Config.GiveKeys = function(vehicle)
+    local plate = GetVehicleNumberPlateText(vehicle)
+    -- Replace this line with your export / event to give keys for your vehicle.
+end
+
 Config.Fires = {
     flammable = true, -- Players catch on fire when near enough (determined by flame.fireRadius)
     damageUpdate = 2, -- Update server-side upon release or when damage applied reaches this number.
