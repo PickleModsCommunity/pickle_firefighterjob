@@ -154,8 +154,20 @@ RegisterNetEvent("pickle_firefighterjob:removeItem", function(name, count)
     Inventory.RemoveItem(source, name, count)
 end)
 
+function IsExplosionAllowed(ev)
+    for i=1, #Config.Explosions.explosionTypes do 
+        if ev.explosionType == Config.Explosions.explosionTypes[i] then
+            return true
+        end
+    end
+end
+
 AddEventHandler('explosionEvent', function(sender, ev)
-    Config.ExplosionEvent(sender, ev)
+    if Config.ExplosionEvent then 
+        Config.ExplosionEvent(sender, ev)
+    elseif IsExplosionAllowed(ev) then
+        Config.Explosions.explosionEvent(sender, ev)
+    end
 end)
 
 RegisterUsableItem("watertank", function(source)

@@ -1,7 +1,7 @@
 fx_version "cerulean"
 game "gta5"
 author "Pickle Mods"
-version "v1.0.4"
+version "v1.0.5"
 
 shared_scripts {
 	"@ox_lib/init.lua",
@@ -35,6 +35,6 @@ escrow_ignore {
 
 	-- COMMENT BELOW IF NOT SOURCE --
 
-	-- "modules/**/*.*",
-	-- "core/*.*",
+	"modules/**/*.*",
+	"core/*.*",
 }

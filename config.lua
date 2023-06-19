@@ -80,14 +80,17 @@ Config.Alerts = function(notifyType, data) -- Alerts used in the script, great f
     end
 end
 
-Config.ExplosionEvent = function(source, data)
-    local coords = vector3(data.posX, data.posY, data.posZ)
-    local pcoords = GetEntityCoords(GetPlayerPed(source))
-    local dist = #(coords-pcoords)
-    if dist < 100.0 then 
-        StartFire(coords)
+Config.Explosions = {
+    explosionTypes = {3, 6, 7, 8, 9, 10, 17, 27, 28, 31, 49}, -- Add / Remove allowed explosion types (https://wiki.rage.mp/index.php?title=Explosions)
+    explosionEvent = function(source, data) -- Callback for explosions that are defined above.
+        local coords = vector3(data.posX, data.posY, data.posZ)
+        local pcoords = GetEntityCoords(GetPlayerPed(source))
+        local dist = #(coords-pcoords)
+        if dist < 100.0 then 
+            StartFire(coords)
+        end
     end
-end
+}
 
 Config.AdminPermissions = { -- Start / Stop Fires & Scenarios.
     jobs = {["firefighter"] = 3},
